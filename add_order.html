@@ -1,0 +1,22 @@
+<html>
+  <body>
+    <h2>Add New Order</h2>
+    <form method="POST">
+      User ID: <input name="user_id"><br>
+      Product ID: <input name="product_id"><br>
+      Status: 
+      <select name="order_status">
+        <option value="pending">pending</option>
+        <option value="shipped">shipped</option>
+        <option value="delivered">delivered</option>
+        <option value="returned">returned</option>
+        <option value="cancelled">cancelled</option>
+      </select><br>
+      Order Date (YYYY-MM-DD): <input name="order_date"><br>
+      Delivery Date (YYYY-MM-DD): <input name="delivery_date"><br>
+      Amount: <input name="amount" type="number"><br>
+      <input type="submit" value="Add Order">
+    </form>
+    <a href="/">Back to Home</a>
+  </body>
+</html>
