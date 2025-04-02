@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <h2>All Orders</h2>
+    <ul>
+      {% for o in orders %}
+        <li>
+          Order #{{ o.order_id }} | {{ o.customer_name }} | Product ID: {{ o.product_id }}<br>
+          Status: {{ o.status }}<br>
+          Ordered: {{ o.order_date }} | Delivery: {{ o.delivery_date }}<br>
+          Amount: {{ o.amount }}
+        </li>
+        <br>
+      {% endfor %}
+    </ul>
+    <a href="/">Back to Home</a>
+  </body>
+</html>
