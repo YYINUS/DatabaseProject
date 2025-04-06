@@ -1,0 +1,23 @@
+<!-- templates/cart.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart</title>
+</head>
+<body>
+  <h1>Your Cart</h1>
+
+  {% if cart_items and cart_items|length > 0 %}
+    <ul>
+      {% for item in cart_items %}
+        <li>{{ item.name }} - ${{ item.price }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Your cart is empty.</p>
+  {% endif %}
+
+  <a href="/products">Continue Shopping</a><br>
+  <a href="/payment">Go to Payment</a>
+</body>
+</html>
