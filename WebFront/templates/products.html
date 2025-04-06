@@ -4,39 +4,18 @@
   <title>Products</title>
   <style>
     table, th, td {
-      border: 1px solid #000;
+      border: 1px solid black;
       border-collapse: collapse;
       padding: 8px;
     }
     th {
-      background-color: #ddd;
-    }
-    .filter-section {
-      margin-bottom: 20px;
+      background-color: #f2f2f2;
     }
   </style>
 </head>
 <body>
-  <h1>Products</h1>
+  <h1>All Products</h1>
 
-  <!-- Filter Form -->
-  <div class="filter-section">
-    <form method="GET" action="/products">
-      <label for="category">Category:</label>
-      <input type="text" name="category" id="category" value="{{ category_filter }}">
-
-      <label for="min_price">Min Price:</label>
-      <input type="text" name="min_price" id="min_price" value="{{ min_price }}">
-
-      <label for="max_price">Max Price:</label>
-      <input type="text" name="max_price" id="max_price" value="{{ max_price }}">
-
-      <button type="submit">Filter</button>
-      <a href="/products"><button type="button">Reset</button></a>
-    </form>
-  </div>
-
-  <!-- Results Table -->
   {% if products and products|length > 0 %}
     <table>
       <tr>
@@ -48,16 +27,16 @@
         <th>Price</th>
         <th>Stock</th>
       </tr>
-      {% for row in products %}
-      <tr>
-        <td>{{ row.product_id }}</td>
-        <td>{{ row.product_name }}</td>
-        <td>{{ row.category }}</td>
-        <td>{{ row.image }}</td>
-        <td>{{ row.description }}</td>
-        <td>{{ row.price }}</td>
-        <td>{{ row.stock_quantity }}</td>
-      </tr>
+      {% for p in products %}
+        <tr>
+          <td>{{ p.product_id }}</td>
+          <td>{{ p.product_name }}</td>
+          <td>{{ p.category }}</td>
+          <td>{{ p.image }}</td>
+          <td>{{ p.description }}</td>
+          <td>{{ p.price }}</td>
+          <td>{{ p.stock_quantity }}</td>
+        </tr>
       {% endfor %}
     </table>
   {% else %}

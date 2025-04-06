@@ -1,4 +1,8 @@
 import os
+path = os.path.abspath(__file__)
+safe_path = path.encode('ascii', errors='ignore').decode()
+print("I AM RUNNING THIS FILE:", safe_path)
+
 from flask import Flask, render_template, g, redirect, request
 from sqlalchemy import create_engine, text
 from sqlalchemy.pool import NullPool
@@ -45,61 +49,42 @@ def teardown_request(exception):
 def index():
     return render_template("index.html")
 
+
 # 1) Products page
 @app.route('/products')
 def products():
-    """
-    Show products in a table, and allow filtering by category 
-    and price range using GET query params.
-    """
-    # 1) Collect filter values from URL query params
-    category_filter = request.args.get('category', default='', type=str)
-    min_price = request.args.get('min_price', default='', type=str)
-    max_price = request.args.get('max_price', default='', type=str)
+    print("✅ /products route HIT!")
 
-    # 2) Build the SQL query dynamically based on filters
-    base_query = """
+    query = text("""
         SELECT product_id, product_name, category, image, description, price, stock_quantity
         FROM products
-    """
-    conditions = []
-    params = {}
+        ORDER BY product_id
+    """)
 
-    # If user entered a category filter
-    if category_filter:
-        conditions.append("category = :cat")
-        params['cat'] = category_filter
-
-    # If user entered min price
-    if min_price:
-        conditions.append("price >= :minp")
-        params['minp'] = float(min_price)
-
-    # If user entered max price
-    if max_price:
-        conditions.append("price <= :maxp")
-        params['maxp'] = float(max_price)
-
-    # If we have conditions, add WHERE
-    if conditions:
-        base_query += " WHERE " + " AND ".join(conditions)
-
-    # Optional: add ORDER BY, etc.
-    base_query += " ORDER BY product_id"
-
-    # 3) Execute the query
-    cursor = g.conn.execute(text(base_query), params)
-    products_list = cursor.fetchall()
+    cursor = g.conn.execute(query)
+    rows = cursor.fetchall()
     cursor.close()
 
-    # 4) Render the products template with the filter form and the results
-    return render_template(
-        'products.html',
-        products=products_list,
-        category_filter=category_filter,
-        min_price=min_price,
-        max_price=max_price
-    )
+    print("✅ Raw rows:", rows)
+
+    products_list = [
+        {
+            "product_id": row[0],
+            "product_name": row[1],
+            "category": row[2],
+            "image": row[3],
+            "description": row[4],
+            "price": row[5],
+            "stock_quantity": row[6]
+        }
+        for row in rows
+    ]
+
+    print("✅ Converted to dicts:", products_list)
+
+    return render_template("products.html", products=products_list)
+
+
 
 # 2) Shopping cart page
 @app.route('/cart')
