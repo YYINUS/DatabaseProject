@@ -369,7 +369,6 @@ def process_payment():
 
     method = request.form['method']
 
-    # Get the latest pending payment for the user
     payment_row = g.conn.execute(text("""
         SELECT payment_id FROM payments
         WHERE user_id = :uid AND payment_status = 'pending'
@@ -382,7 +381,6 @@ def process_payment():
 
     payment_id = payment_row[0]
 
-    # Update the method and set status to completed
     g.conn.execute(text("""
         UPDATE payments
         SET method = :method, payment_status = 'completed'
@@ -391,7 +389,8 @@ def process_payment():
 
     g.conn.commit()
 
-    return render_template('payment.html')
+    return render_template('payment_success.html')
+
 
 # --------------------- ORDERS ---------------------
 @app.route('/orders')
