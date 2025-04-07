@@ -1,3 +1,7 @@
+**Team Members Information**
+- Yasemin Yuksel (yy3294)
+- Yeyuxi Yi (yy3561)
+
 **PostgreSQL Database Information** --> psql -U yy3294 -h 34.148.223.31 -d proj1part2
 - database account (UNI): yy3294
 - host: 34.148.223.31
@@ -17,6 +21,7 @@ the following features:
   * view orders
   * add reviews for products
 - All the data is dynamically fetched from our PostgreSQL datavase via SQLAlchemy
+Following the feedback we received from our TA after our Part 1 submission, we decided to place our focus on the customer side. 
 
 **Bonus Enhancements:**
 - pages styles with basic HTML and form filters
@@ -27,7 +32,7 @@ the following features:
 
 *- /products --> Product Filtering with SQL Query*
 
-  * This page uses user inputs from a filter form (category, min price, max price) to dynamically construct a SELECT query with WHERE conditions:
+   * This page allows users to filter products based on optional input criteria such    as category, minimum price, and maximum price. These inputs are captured from a      front-end HTML form and used to dynamically build a SQL query with appropriate       WHERE clauses.
 
       SELECT product_id, product_name, category, image, description, price, stock_quantity
     
@@ -38,12 +43,11 @@ the following features:
       ORDER BY product_id;
     
    
-  * This is interesting because it demonstrates dynamic query building based on optional user inputs
-  and safely parameterizes SQL to avoid injection.
+  * This page is interesting because it showcases dynamic query construction using     user-defined filters, while safely parameterizing SQL inputs to avoid injection      attacks. It also illustrates how the web interface connects directly to backend      logic by translating user interactions into meaningful database operations.
 
-*- /cart --> Display Shopping Cart Contents*
+*- /cart --> Retrieving Session-Based Shopping Cart Contents*
 
-  * This page retrieves product data for items stored in the session-based shopping cart:
+  * This page displays the products currently in the user’s cart. The cart is stored   in a session variable as a list of product_ids, and the backend retrieves full       product information by querying the database using a PostgreSQL ANY clause.
     
       product_ids = session.get("cart", [])
     
@@ -52,6 +56,5 @@ the following features:
       products = g.conn.execute(query, {"ids": product_ids}).fetchall()
     
     
-  * This is interesting because it shows the integration of front-end session storage
-  with backend SQL logic and uses array-safe queries (ANY) in PostgreSQL.
+  * This page is interesting because it integrates client-side session management      with server-side SQL querying, demonstrating how user activity on the front-end      directly affects query execution on the backend. It also highlights the use of       array-safe querying in PostgreSQL, which efficiently handles variable-length lists   of IDs.
 
