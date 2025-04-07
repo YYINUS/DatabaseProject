@@ -1,23 +1,60 @@
-<!-- templates/cart.html -->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shopping Cart</title>
+  <title>Your Cart</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    td {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h1>Your Cart</h1>
+  <h1>🛒 Your Shopping Cart</h1>
 
   {% if cart_items and cart_items|length > 0 %}
-    <ul>
+    <table>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Remove</th>
+      </tr>
+      {% set total = namespace(value=0) %}
       {% for item in cart_items %}
-        <li>{{ item.name }} - ${{ item.price }}</li>
+        <tr>
+          <td>{{ item.product_name }}</td>
+          <td>${{ item.price }}</td>
+          <td>
+            <form method="POST" action="/remove_from_cart">
+              <input type="hidden" name="product_id" value="{{ item.product_id }}">
+              <button type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% set total.value = total.value + item.price %}
       {% endfor %}
-    </ul>
+      <tr>
+        <td colspan="2"><strong>Total</strong></td>
+        <td colspan="2"><strong>${{ total.value }}</strong></td>
+      </tr>
+    </table>
+
+    <br>
+    <form method="POST" action="/checkout">
+      <button type="submit">💳 Proceed to Checkout</button>
+    </form>
   {% else %}
     <p>Your cart is empty.</p>
   {% endif %}
 
-  <a href="/products">Continue Shopping</a><br>
-  <a href="/payment">Go to Payment</a>
+  <p><a href="/products">⬅️ Continue Shopping</a></p>
 </body>
 </html>
+

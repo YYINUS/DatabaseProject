@@ -1,0 +1,40 @@
+<!-- templates/product_reviews.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Details</title>
+</head>
+<body>
+  <h1>{{ product.product_name }} (ID: {{ product.product_id }})</h1>
+  <p><strong>Category:</strong> {{ product.category }}</p>
+  <p><strong>Description:</strong> {{ product.description }}</p>
+  <p><strong>Price:</strong> ${{ product.price }}</p>
+  <p><strong>Stock:</strong> {{ product.stock_quantity }}</p>
+
+  <h2>📝 Reviews</h2>
+  {% if reviews %}
+    <ul>
+      {% for r in reviews %}
+        <li><strong>{{ r.first_name }} {{ r.last_name }}</strong>: ⭐ {{ r.rating }}<br>{{ r.review_text }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No reviews yet.</p>
+  {% endif %}
+
+  {% if user_id %}
+    <h3>Leave a Review:</h3>
+    <form method="POST">
+      <label>Rating (1-5):</label>
+      <input type="number" name="rating" min="1" max="5" required><br>
+      <label>Review:</label><br>
+      <textarea name="review_text" rows="4" cols="40" required></textarea><br>
+      <button type="submit">Submit Review</button>
+    </form>
+  {% else %}
+    <p><a href="/login">Login</a> to write a review.</p>
+  {% endif %}
+
+  <p><a href="/products">⬅ Back to Products</a></p>
+</body>
+</html>

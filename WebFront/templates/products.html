@@ -16,33 +16,67 @@
 <body>
   <h1>All Products</h1>
 
+  <!-- 🔍 FILTER FORM -->
+  <form method="get" action="/products">
+    <label for="category">Category:</label>
+    <select name="category" id="category">
+      <option value="">-- All --</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Furniture">Furniture</option>
+      <option value="Accessories">Accessories</option>
+      <option value="Footwear">Footwear</option>
+      <option value="Appliances">Appliances</option>
+    </select>
+
+    &nbsp;&nbsp;
+
+    <label for="min_price">Min Price:</label>
+    <input type="number" name="min_price" id="min_price" placeholder="0" min="0" step="1">
+
+    &nbsp;&nbsp;
+
+    <label for="max_price">Max Price:</label>
+    <input type="number" name="max_price" id="max_price" placeholder="1000" min="0" step="1">
+
+    <button type="submit">Apply Filters</button>
+  </form>
+
+  <br>
+
   {% if products and products|length > 0 %}
     <table>
       <tr>
-        <th>Product ID</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Stock</th>
+        <th>ID</th><th>Name</th><th>Category</th><th>Image</th>
+        <th>Description</th><th>Price</th><th>Stock</th>
+        <th>Add to Cart</th><th>Details</th>
       </tr>
       {% for p in products %}
-        <tr>
-          <td>{{ p.product_id }}</td>
-          <td>{{ p.product_name }}</td>
-          <td>{{ p.category }}</td>
-          <td>{{ p.image }}</td>
-          <td>{{ p.description }}</td>
-          <td>{{ p.price }}</td>
-          <td>{{ p.stock_quantity }}</td>
-        </tr>
+      <tr>
+        <td>{{ p.product_id }}</td>
+        <td>{{ p.product_name }}</td>
+        <td>{{ p.category }}</td>
+        <td>{{ p.image }}</td>
+        <td>{{ p.description }}</td>
+        <td>${{ p.price }}</td>
+        <td>{{ p.stock_quantity }}</td>
+        <td>
+          <form method="POST" action="/add_to_cart">
+            <input type="hidden" name="product_id" value="{{ p.product_id }}">
+            <button type="submit">Add to Cart</button>
+          </form>
+        </td>
+        <td>
+          <form method="GET" action="/product/{{ p.product_id }}">
+            <button type="submit">View</button>
+          </form>
+        </td>
+      </tr>
       {% endfor %}
     </table>
   {% else %}
     <p>No products found.</p>
   {% endif %}
 
-  <p><a href="/">Back to Home</a></p>
+  <p><a href="/">⬅️ Back to Home</a> | <a href="/cart">🛒 Go to Cart</a></p>
 </body>
 </html>

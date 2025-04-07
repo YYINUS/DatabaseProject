@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>👤 Register New Account</h2>
+
+  <form method="POST" action="/register">
+    <label for="first_name">First Name*</label>
+    <input type="text" name="first_name" required>
+
+    <label for="last_name">Last Name*</label>
+    <input type="text" name="last_name" required>
+
+    <label for="email_address">Email Address*</label>
+    <input type="email" name="email_address" required>
+
+    <label for="phone_number">Phone Number*</label>
+    <input type="tel" name="phone_number" required>
+
+    <label for="password">Password* (at least 8 characters)</label>
+    <input type="password" name="password" required minlength="8">
+
+    <label for="zip_code">Zip Code</label>
+    <input type="text" name="zip_code" pattern="\d*">
+
+    <label for="city">City</label>
+    <input type="text" name="city">
+
+    <label for="country">Country</label>
+    <input type="text" name="country">
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p>Already have an account? <a href="/login">Login here</a>.</p>
+</body>
+</html>

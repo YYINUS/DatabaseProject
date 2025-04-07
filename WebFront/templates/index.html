@@ -1,12 +1,22 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home</title>
+  <title>Home - E-commerce App</title>
 </head>
 <body>
-  <h1><h1>Welcome to the Home Page 🎯</h1>
-</h1>
-  <a href="/products"><button>View Products</button></a>
+  <h1>Welcome to the E-commerce Store</h1>
+
+  {% if session.user_id %}
+    <p>✅ You are logged in.</p>
+    <p><a href="/logout">🔓 Logout</a></p>
+    <p><a href="/products">🛍️ View Products</a></p>
+    <p><a href="/cart">🛒 View Cart</a></p>
+    <p><a href="/orders">📦 View Orders</a></p>
+  {% else %}
+    <p><a href="/login">🔐 Login</a></p>
+    <p><a href="/products">🛍️ View Products</a></p>
+    <p><a href="/cart">🛒 View Cart</a></p>
+    <p><a href="/orders">📦 View Orders</a></p>
+  {% endif %}
 </body>
 </html>

@@ -1,12 +1,46 @@
-<!-- templates/orders.html -->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Orders</title>
+  <title>Your Orders</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
-  <h1>Your Orders</h1>
-  <p>Information about past or current orders goes here.</p>
-  <a href="/">Back to Home</a>
+  <h1>📦 Your Orders</h1>
+
+  {% if orders and orders|length > 0 %}
+    <table>
+      <tr>
+        <th>Order ID</th>
+        <th>Product</th>
+        <th>Status</th>
+        <th>Ordered On</th>
+        <th>Delivery Date</th>
+        <th>Amount</th>
+      </tr>
+      {% for o in orders %}
+        <tr>
+          <td>{{ o.order_id }}</td>
+          <td>{{ o.product_name }}</td>
+          <td>{{ o.order_status }}</td>
+          <td>{{ o.order_date }}</td>
+          <td>{{ o.delivery_date }}</td>
+          <td>{{ o.amount }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>You haven't placed any orders yet.</p>
+  {% endif %}
+
+  <p><a href="/">⬅️ Back to Home</a></p>
 </body>
 </html>
