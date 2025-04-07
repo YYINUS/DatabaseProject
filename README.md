@@ -24,7 +24,9 @@ the following features:
 - validations for product filtering
 
 **Interesting Pages with Database Logic:**
+
 *- /products --> Product Filtering with SQL Query*
+
   * This page uses user inputs from a filter form (category, min price, max price) to dynamically construct a SELECT query with WHERE conditions:
       SELECT product_id, product_name, category, image, description, price, stock_quantity
       FROM products
@@ -32,7 +34,9 @@ the following features:
       ORDER BY product_id;
   * This is interesting because it demonstrates dynamic query building based on optional user inputs
   and safely parameterizes SQL to avoid injection.
+
 *- /cart --> Display Shopping Cart Contents*
+
   * This page retrieves product data for items stored in the session-based shopping cart:
       product_ids = session.get("cart", [])
       query = text("SELECT * FROM products WHERE product_id = ANY(:ids)")
