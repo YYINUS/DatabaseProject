@@ -30,9 +30,13 @@ the following features:
   * This page uses user inputs from a filter form (category, min price, max price) to dynamically construct a SELECT query with WHERE conditions:
 
       SELECT product_id, product_name, category, image, description, price, stock_quantity
+    
       FROM products
+    
       WHERE category = :cat AND price BETWEEN :min_price AND :max_price
+    
       ORDER BY product_id;
+    
    
   * This is interesting because it demonstrates dynamic query building based on optional user inputs
   and safely parameterizes SQL to avoid injection.
@@ -42,8 +46,11 @@ the following features:
   * This page retrieves product data for items stored in the session-based shopping cart:
     
       product_ids = session.get("cart", [])
+    
       query = text("SELECT * FROM products WHERE product_id = ANY(:ids)")
+    
       products = g.conn.execute(query, {"ids": product_ids}).fetchall()
+    
     
   * This is interesting because it shows the integration of front-end session storage
   with backend SQL logic and uses array-safe queries (ANY) in PostgreSQL.
