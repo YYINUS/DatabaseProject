@@ -21,6 +21,7 @@ the following features:
   * view orders
   * add reviews for products
 - All the data is dynamically fetched from our PostgreSQL datavase via SQLAlchemy
+
 Following the feedback we received from our TA after our Part 1 submission, we decided to place our focus on the customer side. 
 
 **Bonus Enhancements:**
@@ -43,7 +44,7 @@ Following the feedback we received from our TA after our Part 1 submission, we d
       ORDER BY product_id;
     
    
-  * This page is interesting because it showcases dynamic query construction using     user-defined filters, while safely parameterizing SQL inputs to avoid injection      attacks. It also illustrates how the web interface connects directly to backend      logic by translating user interactions into meaningful database operations.
+  * This page is interesting because it showcases the construction of dynamic queries using     user-defined filters, while safely parameterizing SQL inputs to avoid injection      attacks. It also illustrates how the web interface connects directly to backend      logic by translating user interactions into meaningful database operations.
 
 *- /cart --> Retrieving Session-Based Shopping Cart Contents*
 
