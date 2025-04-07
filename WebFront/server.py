@@ -360,6 +360,39 @@ def checkout():
 def payment():
     return render_template("payment.html")
 
+# --------------------- PROCESS PAYMENT (Update method + complete) ---------------------
+@app.route('/process_payment', methods=['POST'])
+def process_payment():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect('/login')
+
+    method = request.form['method']
+
+    # Get the latest pending payment for the user
+    payment_row = g.conn.execute(text("""
+        SELECT payment_id FROM payments
+        WHERE user_id = :uid AND payment_status = 'pending'
+        ORDER BY payment_id DESC
+        LIMIT 1
+    """), {'uid': user_id}).fetchone()
+
+    if not payment_row:
+        return "No pending payment found."
+
+    payment_id = payment_row[0]
+
+    # Update the method and set status to completed
+    g.conn.execute(text("""
+        UPDATE payments
+        SET method = :method, payment_status = 'completed'
+        WHERE payment_id = :pid
+    """), {'method': method, 'pid': payment_id})
+
+    g.conn.commit()
+
+    return render_template('payment.html')
+
 # --------------------- ORDERS ---------------------
 @app.route('/orders')
 def orders():
